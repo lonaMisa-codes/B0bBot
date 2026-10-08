@@ -9,9 +9,9 @@ def load_config():
         return json.load(f)
 
 class SellModal(Modal, title="Sell Spawners"):
-    amount = TextInput(label="Amount of spawners", placeholder="e.g. 5", required=True)
-    price = TextInput(label="Price per spawner", placeholder="e.g. 2000", required=True)
-    spawner_type = TextInput(label="Spawner Type", placeholder="e.g. iron, gold, diamond", required=True)
+    amount = TextInput(label="Amount of spawners", placeholder="e.g. 64", required=True)
+    price = TextInput(label="Price per spawner", placeholder="e.g. 8m", required=True)
+    spawner_type = TextInput(label="Spawner Type", placeholder="e.g. Skeleton, Blaze, Iron Golem", required=True)
 
     async def on_submit(self, interaction: discord.Interaction):
         config = load_config()
@@ -67,8 +67,8 @@ class SellModal(Modal, title="Sell Spawners"):
         await interaction.response.send_message(f"Sell ticket created: {channel.mention}", ephemeral=True)
 
 class BuyModal(Modal, title="Buy Spawners"):
-    amount = TextInput(label="Amount of spawners", placeholder="e.g. 3", required=True)
-    spawner_type = TextInput(label="Spawner Type", placeholder="e.g. iron, gold, diamond", required=True)
+    amount = TextInput(label="Amount of spawners", placeholder="e.g. 64", required=True)
+    spawner_type = TextInput(label="Spawner Type", placeholder="e.g. Skeleton, Blaze, Zombie", required=True)
 
     async def on_submit(self, interaction: discord.Interaction):
         config = load_config()
