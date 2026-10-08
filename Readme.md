@@ -9,7 +9,7 @@ Fully customizable Discord bot with:
 
 ## Setup
 1. Install requirements: `pip install -r requirements.txt`
-2. Put your bot token in `config.json`
+2. Put your bot token in `.env`
 3. Invite bot with Administrator + applications.commands scope
 4. Run: `python bot.py`
 5. Use `/setup` and configure roles/category
