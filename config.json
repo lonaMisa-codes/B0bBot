@@ -1,0 +1,24 @@
+{
+  "prefix": "!",
+  "embed_color": "0x5865F2",
+  "ticket_category_id": null,
+  "log_channel_id": null,
+  "seller_role_id": null,
+  "buy_price_role_id": null,
+  "admin_role_ids": [],
+  "buy_prices": {
+    "iron": 1500,
+    "gold": 3000,
+    "diamond": 8000,
+    "emerald": 12000
+  },
+  "messages": {
+    "sell_ping": "{seller_role} {opener} is selling **{amount}x {type}** for **{total}** ({price} each)",
+    "buy_total": "{opener}\nTotal price for **{amount}x {type}** would be **{total}**",
+    "ticket_welcome": "Thanks for opening a ticket, {opener}!\nStaff will be with you shortly.",
+    "panel_title": "Spawner Marketplace",
+    "panel_description": "Click the buttons below to Sell or Buy spawners.",
+    "sell_button": "Sell Spawners",
+    "buy_button": "Buy Spawners"
+  }
+}
