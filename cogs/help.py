@@ -6,71 +6,68 @@ class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @app_commands.command(name="help", description="Shows all bot commands")
-    async def help(self, interaction: discord.Interaction):
+    @app_commands.command(name="help", description="Shows all commands")
+    async def help_slash(self, interaction: discord.Interaction):
+        await self.send_help(interaction)
+
+    @commands.command(name="help")
+    async def help_prefix(self, ctx):
+        await self.send_help(ctx)
+
+    async def send_help(self, ctx_or_interaction):
         embed = discord.Embed(
-            title="B0bBot Help",
-            description="List of all commands",
+            title="B0bBot Commands",
+            description="Both `/` slash and `!` prefix work",
             color=0x5865F2
         )
 
         embed.add_field(
             name="General",
-            value=(
-                "`/help` - Shows this message\n"
-                "`/calc <expression>` - Calculator (Everyone)"
-            ),
+            value="`/help` or `!help`\n`/ping` or `!ping`\n`/calc <math>` or `!calc <math>`",
             inline=False
         )
 
         embed.add_field(
             name="Tickets",
             value=(
-                "`/spawnerpanel` - Post Sell/Buy panel (Admin)\n"
-                "`/close` - Close current ticket (Everyone in ticket)\n"
+                "`/spawnerpanel` - Sell/Buy panel (Admin)\n"
+                "`/ticketpanel` - Normal support panel (Admin)\n"
+                "`/close [reason]` - Close ticket\n"
                 "`/add <user>` - Add user to ticket\n"
-                "`/remove <user>` - Remove user from ticket"
+                "`/remove <user>` - Remove user\n"
+                "`/claim` - Claim the ticket"
             ),
             inline=False
         )
 
         embed.add_field(
             name="Moderation",
-            value=(
-                "`/ban <user> [reason]` - Ban a member (Mod/Admin)\n"
-                "`/kick <user> [reason]` - Kick a member (Mod/Admin)\n"
-                "`/timeout <user> <minutes> [reason]` - Timeout (Mod/Admin)\n"
-                "`/purge <amount>` - Delete messages (Mod/Admin)\n"
-                "`/lock` - Lock channel (Mod/Admin)\n"
-                "`/unlock` - Unlock channel (Mod/Admin)"
-            ),
+            value="`/ban` `/kick` `/timeout` `/purge` `/lock` `/unlock`",
             inline=False
         )
 
         embed.add_field(
-            name="Admin / Config",
-            value=(
-                "`/setup` - Setup guide (Admin)\n"
-                "`/setcategory` - Set ticket category (Admin)\n"
-                "`/setrole` - Set important roles (Admin)\n"
-                "`/setlogchannel` - Set log channel (Admin)\n"
-                "`/setbuyprice` - Set buy prices (Admin)\n"
-                "`/config` - View current config (Admin)"
-            ),
+            name="Admin",
+            value="`/setup` `/setcategory` `/setrole` `/setbuyprice` `/config`",
             inline=False
         )
 
-        embed.add_field(
-            name="Reaction Roles",
-            value=(
-                "`/rr_add <message_id> <emoji> <role>` - Add reaction role (Admin)\n"
-                "`/rr_remove <message_id> <emoji>` - Remove reaction role (Admin)"
-            ),
-            inline=False
-        )
+        embed.set_footer(text="Made with ❤️")
+        
+        if isinstance(ctx_or_interaction, discord.Interaction):
+            await ctx_or_interaction.response.send_message(embed=embed)
+        else:
+            await ctx_or_interaction.send(embed=embed)
 
-        embed.set_footer(text="Admin = Administrator or roles set with /setrole")
-        await interaction.response.send_message(embed=embed, ephemeral=True)
+    @app_commands.command(name="ping", description="Check bot latency")
+    async def ping_slash(self, interaction: discord.Interaction):
+        latency = round(self.bot.latency * 1000)
+        await interaction.response.send_message(f"Pong! `{latency}ms`")
+
+    @commands.command(name="ping")
+    async def ping_prefix(self, ctx):
+        latency = round(self.bot.latency * 1000)
+        await ctx.send(f"Pong! `{latency}ms`")
 
 async def setup(bot):
     await bot.add_cog(Help(bot))
